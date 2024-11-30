@@ -136,6 +136,6 @@ def insert_into_Iris_Reco_Image(path):
     return results
 
 
-results = insert_into_Iris_Reco_Image("C:\\Users\\user\\Downloads\\mama\\mama")
+results = insert_into_Iris_Reco_Image("G:\\4th year biomedical\\Biometrics\\trash\\.s\\Iris_Recognition")
 images = Images(results)
 images.collect_images()
