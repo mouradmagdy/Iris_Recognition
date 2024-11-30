@@ -135,7 +135,7 @@ def insert_into_Iris_Reco_Image(path):
     print("Submit success")
     return results
 
-
-results = insert_into_Iris_Reco_Image("G:\\4th year biomedical\\Biometrics\\trash\\.s\\Iris_Recognition")
+results = insert_into_Iris_Reco_Image("C:\\Users\MASK\\Documents\\GitHub\\Iris_Recognition")
+# results = insert_into_Iris_Reco_Image("G:\\4th year biomedical\\Biometrics\\trash\\.s\\Iris_Recognition")
 images = Images(results)
 images.collect_images()
