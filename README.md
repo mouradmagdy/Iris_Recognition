@@ -13,7 +13,30 @@ Key Features
 
 * Uses pairwise distance and a learned similarity metric to determine identity.
 
-Dataset
+## Dataset
 CASIA-Iris-Thousand Dataset
 
-Preprocessed using OpenCV and PyTorch’s transform pipeline (grayscale, resize, normalize).
+### Contributors
+
+<table>
+  <tr>
+    <td align="center">
+    <a href="https://github.com/mouradmagdy" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/89527761?v=4" width="150px;" alt="Mourad Magdy"/>
+    <br />
+    <sub><b>Mourad Magdy</b></sub></a>
+    </td>
+    <td align="center">
+    <a href="https://github.com/Maskuerade" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/106713214?v=4" width="150px;" alt="Mariam Ahmed"/>
+    <br />
+    <sub><b>Mariam Ahmed</b></sub></a>
+    </td>
+     <td align="center">
+    <a href="https://github.com/Youssef-Ashraf71" target="_black">
+    <img src="https://avatars.githubusercontent.com/u/83988379?v=4" width="150px;" alt="Youssef Ashraf"/>
+    <br />
+    <sub><b>Youssef Ashraf</b></sub></a>
+    </td>
+      </tr>
+ </table>
