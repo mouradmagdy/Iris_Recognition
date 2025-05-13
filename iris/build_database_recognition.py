@@ -16,15 +16,15 @@ from system import SiameseNetwork
 
 
 transform = transforms.Compose([
-    transforms.Grayscale(num_output_channels=1),  # Ensure single channel
+    transforms.Grayscale(num_output_channels=1), 
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5], std=[0.5])  # Use mean/std for grayscale
+    transforms.Normalize(mean=[0.5], std=[0.5])  
 ])
 
 
 model = SiameseNetwork().cuda()
-model.load_state_dict(torch.load("siamese_model.pth"))
+model.load_state_dict(torch.load("iris/siamese_model.pth"))
 model.eval()
 
 
@@ -39,13 +39,10 @@ def extract_embeddings(image,model,transform):
     return embeddings  
 
 
-
-
-
 image_dic= {
 
 }
-file_path = "users.txt"
+file_path = "iris/users.txt"
 
 with open(file_path,'r') as file:
     file_content = file.read()
@@ -67,5 +64,5 @@ for user_id, path in image_dic.items():
     registered_users[user_id] = features
 
 
-with open("reg_users2.txt" ,"wb") as file:
+with open("iris/reg_users2.txt" ,"wb") as file:
     pickle.dump(registered_users, file)  

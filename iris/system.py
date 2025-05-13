@@ -20,10 +20,10 @@ def read_img(path):
     return tensor
 
 transform = transforms.Compose([
-    transforms.Grayscale(num_output_channels=1),  # Ensure single channel
+    transforms.Grayscale(num_output_channels=1),  
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5], std=[0.5])  # Use mean/std for grayscale
+    transforms.Normalize(mean=[0.5], std=[0.5])  
 ])
 
 def extract_embeddings(image,model,transform):
@@ -68,7 +68,6 @@ def register_user_recognition(user_id, img1path, transform):
 
 
 def authenticate_user_recognition(test_img_pth, model, transform, threshold=2.6):
-    ## open image, extract_embeddings , iterate overall database , minimzie 3al distance
     target_img = Image.open(test_img_pth).convert('L')  
     target_features = extract_embeddings(target_img,model,transform)
     
@@ -84,8 +83,10 @@ def authenticate_user_recognition(test_img_pth, model, transform, threshold=2.6)
     
     print("Best score",best_score)
     if best_score < threshold:
+        print(f"Welcome {best_match} ")
         return best_match,best_score
     else:
+        print("User is not recognized")
         return None,best_score
         
 
@@ -99,10 +100,9 @@ def authenticate_user_verification(user_id,test_img_pth, model, transform, thres
     reg_img = transform(reg_img).unsqueeze(0).to(device="cuda")
     with torch.no_grad():
         output = model(test_img, reg_img).squeeze()
-        predictions = torch.sigmoid(output) > 0.5  # Threshold at 0.5
-        # print(torch.sigmoid(output))
+        predictions = torch.sigmoid(output) > 0.5  
     if predictions > threshold:
-        return f"Access Granted: Welcome {user_id}!"
+        return f"Access Granted!"
 
     return "Access Denied: User not recognized!"
 
@@ -111,11 +111,9 @@ def authenticate_user_verification(user_id,test_img_pth, model, transform, thres
 class SiameseNetwork(nn.Module):
     def __init__(self):
         super(SiameseNetwork, self).__init__()
-        # Using a pretrained model (ResNet18) as the feature extractor
         self.feature_extractor = models.resnet18(pretrained=True)
-        self.feature_extractor.fc = nn.Identity()  # Remove the classification head
+        self.feature_extractor.fc = nn.Identity() 
 
-        # Add a fully connected layer for similarity computation
         self.fc = nn.Sequential(
             nn.Linear(512, 256),
             nn.ReLU(),
@@ -127,7 +125,7 @@ class SiameseNetwork(nn.Module):
         return self.feature_extractor(x)
 
     def forward(self, img1, img2):
-        if img1.shape[1] == 1:  # Check if the input is grayscale
+        if img1.shape[1] == 1:  
             img1 = img1.repeat(1, 3, 1, 1)
             img2 = img2.repeat(1, 3, 1, 1)
         feat1 = self.forward_one(img1)
@@ -137,15 +135,13 @@ class SiameseNetwork(nn.Module):
 
 
 if __name__ == '__main__':
-#   init_verification_database()
+  init_verification_database()
 #   init_recognition_database()
 
   model = SiameseNetwork().cuda()
-  model.load_state_dict(torch.load("siamese_model.pth"))
+  model.load_state_dict(torch.load("iris/siamese_model.pth"))
   model.eval()
-#   print(authenticate_user_recognition("G:\\4th year biomedical\\Biometrics\\code\\CASIA-Iris-Thousand\\CASIA-Iris-Thousand\\406\\L\\S5406L07.jpg",model,transform))
-#   register_user("S5630L09","G:\\4th year biomedical\\Biometrics\\code\\CASIA-Iris-Thousand\\CASIA-Iris-Thousand\\630\\L\\S5630L09.jpg",transform)
-#   register_user("mariam","S3_R1.jpeg",transform)
-#   print(authenticate_user(test_img_pth="G:\\4th year biomedical\\Biometrics\\code\\CASIA-Iris-Thousand\\CASIA-Iris-Thousand\\157\\L\\S5157L01.jpg",model=model,transform=transform))
-#   print(authenticate_user(user_id="S5961",test_img_pth="G:\\4th year biomedical\\Biometrics\\code\\CASIA-Iris-Thousand\\CASIA-Iris-Thousand\\962\\L\\S5962L01.jpg",model=model,transform=transform))
+#   print(authenticate_user_verification(user_id="962",test_img_pth="C:/Users/user/Downloads/CASIA-Iris-Thousand/CASIA-Iris-Thousand/962/L/S5962L05.jpg",model=model,transform=transform))
+  print(authenticate_user_verification(user_id="963",test_img_pth="C:/Users/user/Downloads/CASIA-Iris-Thousand/CASIA-Iris-Thousand/963/L/S5963L05.jpg",model=model,transform=transform))
+
  
